@@ -10,6 +10,8 @@ export interface Game {
     cover?: {
         id: number;
         image_id: string;
+        height: number;
+        width: number;
     };
     artworks?: Array<{
         id: number;
@@ -50,4 +52,14 @@ export interface Game {
             name: string;
         };
     }>;
+    platforms?: Array<{
+            id: number;
+            name: string;
+            platform_logo: Array<{
+                id: number;
+                image_id: string;
+                width: number;
+                height: number;
+            }>
+    }>
 }

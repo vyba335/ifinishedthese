@@ -70,7 +70,7 @@ const _fetchGameData = async (id: string): Promise<Game | null> => {
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
     myHeaders.append("Content-Type", "text/plain");
 
-    const raw = `fields id, artworks.image_id, cover.image_id, expansions.name, expansions.cover.image_id, first_release_date, game_engines.name, genres.name, involved_companies, involved_companies.developer, involved_companies.publisher, involved_companies.porting, involved_companies.supporting, involved_companies.company.name, name, rating, screenshots.image_id, slug, storyline, summary, url, videos.video_id;where id = ${id}; `;
+    const raw = `fields id, artworks.image_id, cover.image_id, cover.height, cover.width, expansions.name, expansions.cover.image_id, first_release_date, game_engines.name, genres.name, involved_companies, involved_companies.developer, involved_companies.publisher, involved_companies.porting, involved_companies.supporting, involved_companies.company.name, name, platforms, platforms.name, platforms.platform_logo.image_id, platforms.platform_logo.width, platforms.platform_logo.height, rating, screenshots.image_id, slug, storyline, summary, url, videos.video_id;where id = ${id}; `;
 
     const requestOptions = {
         method: "POST",

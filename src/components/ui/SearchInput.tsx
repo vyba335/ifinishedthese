@@ -1,6 +1,6 @@
 const SearchInput = () => {
     return (
-        <div className="flex md:order-2">
+        <div className="flex">
             <button
                 type="button"
                 data-collapse-toggle="navbar-search"
