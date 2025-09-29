@@ -59,7 +59,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({ title, subtitle, gameHeaderData
                         <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white pt-2">
                             {title} {gameHeaderData?.released && (
                                 <span className="text-base text-gray-300/80">
-                                    {gameHeaderData?.released ? `(${new Date(gameHeaderData.released).toLocaleDateString("en-US", { 
+                                    {gameHeaderData?.released ? `(${new Date(gameHeaderData.released * 1000).toLocaleDateString("en-US", { 
                                         year: "numeric",
                                         month: "short",
                                         day: "numeric"
