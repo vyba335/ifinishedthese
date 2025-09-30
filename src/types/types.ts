@@ -2,6 +2,7 @@ export interface Game {
     id: number;
     name: string;
     rating?: number;
+    rating_count?: number;
     summary?: string;
     storyline?: string;
     slug: string;
@@ -55,6 +56,7 @@ export interface Game {
     platforms?: Array<{
             id: number;
             name: string;
+            url: string;
             platform_logo: Array<{
                 id: number;
                 image_id: string;
