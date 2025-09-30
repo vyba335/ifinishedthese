@@ -6,7 +6,7 @@ import AccessibilityFeatures from "../features/AccessibilityFeatures";
 const Footer = () => {
 
     return (
-        <footer className="fixed bottom-0 w-full p-8 custom-footer">
+        <footer className="static bottom-0 w-full p-8 custom-footer">
             <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 text-center">
                 <Link href="/">
                     <Image

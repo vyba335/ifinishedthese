@@ -65,3 +65,18 @@ export interface Game {
             }>
     }>
 }
+
+export interface PopularGame {
+    id: number;
+    name: string;
+    rating?: number;
+    rating_count?: number;
+    url: string;
+    first_release_date: number;
+    cover?: {
+        id: number;
+        image_id: string;
+        height: number;
+        width: number;
+    };
+}

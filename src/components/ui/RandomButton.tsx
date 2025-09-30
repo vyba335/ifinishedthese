@@ -6,7 +6,7 @@ const RandomButton = () => {
     const router = useRouter();
     const handleRandomClick = () => {
         const randomGameId = Math.floor(Math.random() * (Math.floor(30000) - Math.ceil(1) + Math.ceil(1)));
-        router.replace(`/game/id/${randomGameId}`);
+        router.push(`/game/id/${randomGameId}`);
     }
 
     return (

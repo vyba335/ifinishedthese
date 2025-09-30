@@ -87,3 +87,49 @@ export const GameHeaderSkeleton: React.FC = () => {
         </div>
     );
 };
+
+const GameCardSkeleton: React.FC = () => {
+    return (
+        <div>
+            <div>
+                {/* Image skeleton */}
+                <div className="relative aspect-square overflow-hidden">
+                    <Skeleton className="absolute inset-0" variant="rectangular" />
+                </div>
+                
+                {/* Content skeleton */}
+                <div className="p-6">
+                    <div className="mb-3">
+                        {/* Title skeleton */}
+                        <Skeleton className="h-7 w-3/4 mb-2" variant="rectangular" />
+                        
+                        <div className="flex items-center gap-2 mt-1">
+                            {/* Date skeleton */}
+                            <div className="flex items-center gap-1">
+                                <Skeleton className="w-3 h-3" variant="rectangular" />
+                                <Skeleton className="h-4 w-24" variant="text" />
+                            </div>
+                            
+                            {/* Rating skeleton */}
+                            <div className="glass flex flex-col rounded-lg justify-center items-center text-center px-4 py-2">
+                                <div className="flex justify-center items-center gap-2 mb-1">
+                                    <Skeleton className="w-8 h-8" variant="circular" />
+                                    <Skeleton className="h-8 w-16" variant="text" />
+                                </div>
+                                <Skeleton className="h-4 w-24" variant="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export const GameCardGridSkeleton: React.FC = () => {
+    return (
+    Array.from({ length: 15 }).map((_, i) => (
+        <GameCardSkeleton key={i} />
+    ))
+    )
+}

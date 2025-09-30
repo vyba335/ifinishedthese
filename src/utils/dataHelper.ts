@@ -1,4 +1,4 @@
-import type { Game } from "@/types/types";
+import type { Game, PopularGame } from "@/types/types";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
@@ -102,6 +102,102 @@ export const fetchGameData = unstable_cache(
     ["game-data"],
     {
         revalidate: 3600,
-        tags: ["games"]
+        tags: ["games"],
     }
 );
+
+interface PopularGamesId {
+    id: number;
+    game_id: number;
+}
+
+const _fetchPopularGamesId = async (): Promise<string> => {
+    const clientId = process.env.TWITCH_ID;
+    const accessToken = await getAccessToken();
+
+    if (!clientId || !accessToken) {
+        throw new Error(
+            "Missing required environment variables: clientId and/or accessToken"
+        );
+    }
+    const myHeaders = new Headers();
+    myHeaders.append("Client-ID", clientId);
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append("Content-Type", "text/plain");
+
+    const raw = "fields game_id, value, popularity_type;\r\nlimit 15;\r\nsort value desc;\r\nwhere popularity_type=3;";
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+    };
+
+    try {
+        const response = await fetch(
+            "https://api.igdb.com/v4/popularity_primitives",
+            requestOptions
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status ${response.status}`);
+        }
+
+        const result: PopularGamesId[] = await response.json();
+        const gameIds: string = result.map((item: PopularGamesId) => item.game_id).join(",");
+
+        return gameIds;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const fetchPopularGamesId = unstable_cache(
+    _fetchPopularGamesId,
+    ["popular-games-ids"],
+    {
+        revalidate: 3600,
+        tags: ["gameIds"],
+    }
+);
+
+export const fetchPopularGamesData = async (): Promise<PopularGame[]> => {
+    const clientId = process.env.TWITCH_ID;
+    const accessToken = await getAccessToken();
+    const gameIds = await fetchPopularGamesId();
+
+    if (!clientId || !accessToken) {
+        throw new Error(
+            "Missing required environment variables: clientId and/or accessToken"
+        );
+    }
+    const myHeaders = new Headers();
+    myHeaders.append("Client-ID", clientId);
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append("Content-Type", "text/plain");
+
+    const raw = `fields id, cover.image_id, cover.height, cover.width, first_release_date, name, rating, rating_count, url;where id = (${gameIds}); `;
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+    };
+
+    try {
+        const response = await fetch(
+            "https://api.igdb.com/v4/games/",
+            requestOptions
+        );
+        if (!response.ok) {
+            throw new Error(`HTTP error! status ${response.status}`);
+        }
+        const result: PopularGame[] = await response.json();
+
+        return result;
+    } catch (error) {
+        console.error("Error while fetching data:", error);
+        throw error;
+    }
+}
