@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import PlatformGrid from "./PlatformGrid";
-import { Star } from "lucide-react";
+import { BookText, Star } from "lucide-react";
 
 interface GameHeaderData {
     backgroundId: string | null | undefined;
@@ -54,7 +54,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
                         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/60 via-transparent to-gray-900/60" />
                     </div>
                 )}
-                <div className="flex justify-center items-top max-w-[95vw] md:max-w-[80vw] mx-auto">
+                <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start gap-2 sm:gap-0 items-top max-w-[95vw] md:max-w-[1400px] mx-auto">
                     <div className="flex-none z-10">
                         <Image
                             src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${gameHeaderData?.image_id}.webp`}
@@ -87,24 +87,24 @@ const GameHeader: React.FC<GameHeaderProps> = ({
                                               month: "short",
                                               day: "numeric",
                                           })})`
-                                        : ""}
+                                        : `TBA`}
                                 </span>
                             )}
                             {subtitle && (
                                 <p className="mt-4 mb-6 text-base text-pretty text-gray-700 sm:text-lg/relaxed dark:text-gray-100">
-                                    {subtitle}
+                                    <BookText className="float-left w-6 h-6 mr-2" />{subtitle}
                                 </p>
                             )}
                             <a className="absolute bottom-4 right-4 text-right" href={gameHeaderData?.gameUrl} target="_blank">More on IGDB.com</a>
                         </div>
                         <div className="flex justify-start gap-4">
                             {gameHeaderData?.rating && (
-                                <div className="glass flex flex-col rounded-lg jsutify-center items-center text-center px-4 py-2">
+                                <div className="glass flex flex-col rounded-lg justify-center items-center text-center px-4 py-2">
                                     <div className="flex justify-center items-center gap-2 text-2xl leading-none">
                                         <Star className="w-8 h-8 text-yellow-300" />
                                         <span>{Number(gameHeaderData?.rating?.toFixed(0)) / 10}/10</span>
                                     </div>
-                                    <div className="col-span-2 h-auto">{gameHeaderData.ratingCount > 1000 ? `${(gameHeaderData.ratingCount / 1000).toFixed(0)}+` : gameHeaderData.ratingCount} user ratings</div>
+                                    <div className="col-span-2 h-auto">{gameHeaderData.ratingCount > 1000 ? `${(gameHeaderData.ratingCount / 1000).toFixed(0)}k+` : gameHeaderData.ratingCount} user ratings</div>
                                 </div>
                             )}
                             {gameHeaderData?.platforms && (

@@ -12,14 +12,14 @@ interface Platform {
     };
 }
 
-const PLATFORM_LIMIT = 4;
+const PLATFORM_LIMIT = 3;
 
 const PlatformGrid = ({ platforms, gameUrl }: { platforms: Platform[], gameUrl: string }) => {
     const platformsLength = platforms.length;
     return (
-        <div className="inline-flex justify-center py-2 rounded-lg items-center gap-2">
+        <div className="flex flex-wrap justify-center py-2 rounded-lg items-center gap-2">
             {platforms.slice(0, PLATFORM_LIMIT).map((platform) => (
-                <span key={platform.id} className="platform-grid"><a className="btn-secondary" href={platform.url} target="_blank" data-theme="dark">{platform.name}</a> </span>
+                <span key={platform.id} className="platform-grid mb-5 md:mb-0"><a className="btn-secondary" href={platform.url} target="_blank" data-theme="dark">{platform.name}</a> </span>
             ))}
             {platformsLength <= PLATFORM_LIMIT ? (
                 null

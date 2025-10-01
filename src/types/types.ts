@@ -17,6 +17,11 @@ export interface Game {
     artworks?: Array<{
         id: number;
         image_id: string;
+        width: number;
+        height: number;
+        artwork_type: {
+            name: string;
+        }
     }>;
     screenshots?: Array<{
         id: number;
@@ -73,10 +78,29 @@ export interface PopularGame {
     rating_count?: number;
     url: string;
     first_release_date: number;
+    game_modes: {
+        id: number;
+        name: string;
+    }[];
     cover?: {
         id: number;
         image_id: string;
         height: number;
         width: number;
     };
+}
+
+export interface GameModes {
+    id: number;
+    name: string;
+}
+
+export interface ArtworkData {
+    id: number;
+    image_id: string;
+    width: number;
+    height: number;
+    artwork_type: {
+        name: string;
+    }
 }

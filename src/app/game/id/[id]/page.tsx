@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import GameHeader from "@/components/ui/GameHeader";
 import { Suspense, use } from "react";
 import { GameHeaderSkeleton } from "@/components/features/LoadingStates";
+import { ImageGrid } from "@/components/ui/ImageGrid";
 
 interface GameHeaderData {
     backgroundId: string | null | undefined;
@@ -55,11 +56,14 @@ function GameContent({ id }: { id: string }) {
     } as GameHeaderData;
 
     return (
-        <GameHeader
-            title={game.name}
-            subtitle={game.summary}
-            gameHeaderData={gameHeaderData}
-        />
+        <div className="flex flex-col items-center justify-center gap-2">
+            <GameHeader
+                title={game.name}
+                subtitle={game.summary}
+                gameHeaderData={gameHeaderData}
+            />
+            {game.artworks && <ImageGrid artworks={game.artworks} />}
+        </div>
     );
 }
 

@@ -1,4 +1,4 @@
-import type { Game, PopularGame } from "@/types/types";
+import type { Game, GameModes, PopularGame } from "@/types/types";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
@@ -70,7 +70,7 @@ const _fetchGameData = async (id: string): Promise<Game | null> => {
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
     myHeaders.append("Content-Type", "text/plain");
 
-    const raw = `fields id, artworks.image_id, cover.image_id, cover.height, cover.width, expansions.name, expansions.cover.image_id, first_release_date, game_engines.name, genres.name, involved_companies, involved_companies.developer, involved_companies.publisher, involved_companies.porting, involved_companies.supporting, involved_companies.company.name, name, platforms, platforms.name, platforms.platform_logo.image_id, platforms.platform_logo.width, platforms.platform_logo.height, platforms.url, rating, rating_count, screenshots.image_id, slug, storyline, summary, url, videos.video_id;where id = ${id}; `;
+    const raw = `fields id, artworks.image_id, artworks.artwork_type.name, artworks.width, artworks.height, cover.image_id, cover.height, cover.width, expansions.name, expansions.cover.image_id, first_release_date, game_engines.name, genres.name, involved_companies, involved_companies.developer, involved_companies.publisher, involved_companies.porting, involved_companies.supporting, involved_companies.company.name, name, platforms, platforms.name, platforms.platform_logo.image_id, platforms.platform_logo.width, platforms.platform_logo.height, platforms.url, rating, rating_count, screenshots.image_id, slug, storyline, summary, url, videos.video_id;where id = ${id}; `;
 
     const requestOptions = {
         method: "POST",
@@ -125,7 +125,10 @@ const _fetchPopularGamesId = async (): Promise<string> => {
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
     myHeaders.append("Content-Type", "text/plain");
 
-    const raw = "fields game_id, value, popularity_type;\r\nlimit 15;\r\nsort value desc;\r\nwhere popularity_type=3;";
+    const raw = `fields game_id, value, popularity_type;
+        limit 50;
+        sort value desc;
+        where popularity_type=3;`;
 
     const requestOptions = {
         method: "POST",
@@ -144,8 +147,10 @@ const _fetchPopularGamesId = async (): Promise<string> => {
         }
 
         const result: PopularGamesId[] = await response.json();
-        const gameIds: string = result.map((item: PopularGamesId) => item.game_id).join(",");
-
+        const gameIds: string = result
+            .map((item: PopularGamesId) => item.game_id)
+            .join(",");
+        console.log(gameIds);
         return gameIds;
     } catch (error) {
         console.error(error);
@@ -162,7 +167,7 @@ export const fetchPopularGamesId = unstable_cache(
     }
 );
 
-export const fetchPopularGamesData = async (): Promise<PopularGame[]> => {
+export const _fetchPopularGamesData = async (): Promise<PopularGame[]> => {
     const clientId = process.env.TWITCH_ID;
     const accessToken = await getAccessToken();
     const gameIds = await fetchPopularGamesId();
@@ -177,7 +182,8 @@ export const fetchPopularGamesData = async (): Promise<PopularGame[]> => {
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
     myHeaders.append("Content-Type", "text/plain");
 
-    const raw = `fields id, cover.image_id, cover.height, cover.width, first_release_date, name, rating, rating_count, url;where id = (${gameIds}); `;
+    const raw = `fields id, cover.image_id, cover.height, cover.width, first_release_date, name, rating, rating_count, url, game_modes.name;
+        where id = (${gameIds}); limit 50;`;
 
     const requestOptions = {
         method: "POST",
@@ -195,9 +201,34 @@ export const fetchPopularGamesData = async (): Promise<PopularGame[]> => {
         }
         const result: PopularGame[] = await response.json();
 
-        return result;
+        const singePlayerGames = result.filter(
+            (game) =>
+                game.game_modes &&
+                game.game_modes.some(
+                    (mode: GameModes) =>
+                        mode.name && mode.name.toLowerCase().includes("single")
+                )
+        );
+
+        const gameMap = new Map(singePlayerGames.map(game => [game.id, game]));
+        const gameIdsArr = gameIds.split(",");
+        const numGameIds = gameIdsArr.map(n => Number(n));
+        const orderedGames = numGameIds
+            .map(id => gameMap.get(id))
+            .filter(Boolean) as PopularGame[];
+        console.log(orderedGames);
+        return orderedGames.slice(0, 15);
     } catch (error) {
         console.error("Error while fetching data:", error);
         throw error;
     }
-}
+};
+
+export const fetchPopularGamesData = unstable_cache(
+    _fetchPopularGamesData,
+    ["popular-games-data"],
+    {
+        revalidate: 3600,
+        tags: ["popularGamesData"],
+    }
+);
