@@ -1,4 +1,4 @@
-import Game from "@/models/gameModel";
+import Game from "@/lib/models/gameModel";
 import { revalidatePath } from "next/cache";
 import { connectToMongoDB } from "./db";
 

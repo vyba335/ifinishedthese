@@ -12,7 +12,6 @@ const getAccessToken = async (): Promise<string> => {
 
     // Check if we have a cached token that hasn't expired
     if (tokenCache && currentTime < tokenCache.expires_at) {
-        console.log("Using cached access token");
         return tokenCache.access_token;
     }
 
@@ -150,7 +149,6 @@ const _fetchPopularGamesId = async (): Promise<string> => {
         const gameIds: string = result
             .map((item: PopularGamesId) => item.game_id)
             .join(",");
-        console.log(gameIds);
         return gameIds;
     } catch (error) {
         console.error(error);
@@ -216,7 +214,6 @@ export const _fetchPopularGamesData = async (): Promise<PopularGame[]> => {
         const orderedGames = numGameIds
             .map(id => gameMap.get(id))
             .filter(Boolean) as PopularGame[];
-        console.log(orderedGames);
         return orderedGames.slice(0, 15);
     } catch (error) {
         console.error("Error while fetching data:", error);
@@ -232,3 +229,4 @@ export const fetchPopularGamesData = unstable_cache(
         tags: ["popularGamesData"],
     }
 );
+

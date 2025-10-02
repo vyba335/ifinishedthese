@@ -16,7 +16,7 @@ const GridContent = () => {
     }
 
     return (
-        <section className="flex flex-col">
+        <section className="flex flex-col py-4">
             <div className="flex justify-center items-center"><h2 className="text-3xl">Most popular games</h2></div>
             <div className="flex flex-wrap gap-2 justify-center p-5">
             {gamesData.map((gameData) => (

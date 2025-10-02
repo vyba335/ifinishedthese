@@ -12,10 +12,10 @@ export const GameHeaderSkeleton: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-gray-900/60 via-transparent to-gray-900/60" />
                 </div>
 
-                <div className="flex justify-center items-top max-w-[95vw] md:max-w-[80vw] mx-auto">
+                <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start gap-2 sm:gap-0 items-top max-w-[95vw] md:max-w-[1400px] mx-auto">
                     {/* Cover image skeleton */}
                     <div className="flex-none z-10">
-                        <Skeleton className="w-[280px] h-[373px] rounded-lg" />
+                        <Skeleton className="w-[280px] h-[373px] rounded-lg glass" />
                     </div>
 
                     <div className="flex-1 relative z-10 container mx-auto px-4">

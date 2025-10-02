@@ -19,7 +19,7 @@ const PlatformGrid = ({ platforms, gameUrl }: { platforms: Platform[], gameUrl: 
     return (
         <div className="flex flex-wrap justify-center py-2 rounded-lg items-center gap-2">
             {platforms.slice(0, PLATFORM_LIMIT).map((platform) => (
-                <span key={platform.id} className="platform-grid mb-5 md:mb-0"><a className="btn-secondary" href={platform.url} target="_blank" data-theme="dark">{platform.name}</a> </span>
+                <div key={platform.id} className="platform-grid text-nowrap btn-secondary" data-theme="dark"><a href={platform.url} target="_blank">{platform.name.replace(/ \([\s\S]*?\)/g, '')}</a> </div>
             ))}
             {platformsLength <= PLATFORM_LIMIT ? (
                 null

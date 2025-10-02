@@ -16,7 +16,7 @@ const RandomButton = () => {
         onClick={handleRandomClick}
         >
             <Shuffle className="w-4 h-4" />
-            Random Game
+            <span className="hidden md:block">Random Game</span>
         </button>
     )
 }

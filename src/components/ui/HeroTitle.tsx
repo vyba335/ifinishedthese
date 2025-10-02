@@ -14,7 +14,7 @@ const HeroTitle: React.FC<HeroTitleProps> = ({ title, subtitle }) => {
                         {title}
                     </h1>
                     {subtitle && (
-                        <p className="my-4 text-base text-pretty text-gray-700 sm:text-lg/relaxed dark:text-gray-100">
+                        <p className="mt-4 text-base text-pretty text-gray-700 sm:text-lg/relaxed dark:text-gray-100">
                             {subtitle}
                         </p>
                     )}

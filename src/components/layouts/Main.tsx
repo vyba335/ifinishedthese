@@ -6,7 +6,7 @@ const Main = () => {
 
     return (
         <main>
-            <HeroTitle title="Showcase your finished games" />
+            <HeroTitle title="I Finished These!" subtitle="Save your finished games, write review for them and share your list!" />
             <GameCardGrid />
         </main>
     );

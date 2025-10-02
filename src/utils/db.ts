@@ -1,19 +1,47 @@
-import mongoose, { Connection } from "mongoose";
+import { Db, MongoClient, ServerApiVersion } from "mongodb";
+import mongoose from "mongoose";
 
-let cachedConnection: Connection | null = null;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-export async function connectToMongoDB() {
-    if (cachedConnection) {
-        console.log("Using cached db connection");
-        return cachedConnection;
+const connectToMongoDB = async () => {
+    if (!MONGODB_URI) {
+        throw new Error("Please define the MONGODB_URI environment variable");
     }
     try {
-        const cnx = await mongoose.connect(process.env.MONGODB_URI!);
-        cachedConnection = cnx.connection;
-        console.log("New mongodb connection established");
-        return cachedConnection;
+        await mongoose.connect(MONGODB_URI, {
+            dbName: "ifinishedthese",
+        });
     } catch (error) {
-        console.log(error);
-        throw error;
+        console.log("MongoDB connection error:", error);
     }
 }
+
+export default connectToMongoDB;
+
+/* let cachedClient: MongoClient | null = null;
+let cachedDb: Db | null = null;
+
+export async function connectToMongoDB() {
+
+    const MONGODB_URI = process.env.MONGODB_URI;
+
+    if (!MONGODB_URI) {
+        throw new Error("Please define the MONGODB_URI environment variable");
+    }
+
+    const client = new MongoClient(MONGODB_URI, {
+        serverApi: {
+            version: ServerApiVersion.v1,
+            strict: true,
+            deprecationErrors: true,
+        },
+    });
+
+    await client.connect();
+    cachedClient = client;
+    cachedDb = client.db("ifinishedthese");
+
+    return { client, db: client.db("ifinishedthese") };
+}
+ */
+
