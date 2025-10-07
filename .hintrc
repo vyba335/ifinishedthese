@@ -14,7 +14,9 @@
       {
         "ignore": [
           "text-size-adjust",
-          "text-wrap: pretty"
+          "text-wrap: pretty",
+          "scrollbar-width",
+          "scrollbar-color"
         ]
       }
     ],
