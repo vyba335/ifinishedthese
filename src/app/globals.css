@@ -124,6 +124,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+a:not(.btn-primary):not(.btn-secondary):not(.btn-ghost) {
+    text-decoration: none !important;
+}
+
+a:not(.btn-primary):not(.btn-secondary):not(.btn-ghost):hover {
+    text-decoration: none !important;
+}
+
 .container {
     max-width: 80vw;
 }

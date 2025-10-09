@@ -6,8 +6,8 @@ export default withAuth(
     },
     {
         isReturnToCurrentPage: true,
-        loginPage: "/login",
-        publicPaths: ["/api/user"]
+        loginPage: "/api/auth/login",
+        publicPaths: ["/"]
     }
 );
 

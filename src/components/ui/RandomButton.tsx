@@ -11,12 +11,12 @@ const RandomButton = () => {
 
     return (
         <button
+        title="Go to a random game"
         type="button"
-        className="flex justify-evenly items-center gap-2 btn-primary rounded-lg transition-colors text-gray-400 hover:text-purple-400"
+        className="flex justify-evenly items-center gap-2 btn-primary"
         onClick={handleRandomClick}
         >
-            <Shuffle className="w-4 h-4" />
-            <span className="hidden md:block">Random Game</span>
+            <Shuffle className="w-5 h-5" />
         </button>
     )
 }

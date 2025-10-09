@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { connectToMongoDB } from "@/utils/db";
 import { AuthProvider } from "@/utils/AuthProvider";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
@@ -16,7 +15,6 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    //connectToMongoDB();
     return (
         <AuthProvider>
             <html lang="en">
