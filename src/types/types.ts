@@ -77,8 +77,8 @@ export interface PopularGame {
     rating?: number;
     rating_count?: number;
     url: string;
-    first_release_date: number;
-    game_modes: {
+    first_release_date?: number;
+    game_modes?: {
         id: number;
         name: string;
     }[];

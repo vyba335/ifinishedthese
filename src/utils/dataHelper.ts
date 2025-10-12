@@ -15,8 +15,6 @@ const getAccessToken = async (): Promise<string> => {
         return tokenCache.access_token;
     }
 
-    console.log("Fetching new access token");
-
     const clientId = process.env.TWITCH_ID;
     const clientSecret = process.env.TWITCH_SECRET;
 
@@ -165,10 +163,18 @@ export const fetchPopularGamesId = unstable_cache(
     }
 );
 
-export const _fetchPopularGamesData = async (): Promise<PopularGame[]> => {
+export const _fetchPopularGamesData = async (
+    limit: number,
+    savedGameIds?: string
+): Promise<PopularGame[]> => {
     const clientId = process.env.TWITCH_ID;
     const accessToken = await getAccessToken();
-    const gameIds = await fetchPopularGamesId();
+    let gameIds;
+    if (savedGameIds) {
+        gameIds = savedGameIds;
+    } else {
+        gameIds = await fetchPopularGamesId();
+    }
 
     if (!clientId || !accessToken) {
         throw new Error(
@@ -181,7 +187,7 @@ export const _fetchPopularGamesData = async (): Promise<PopularGame[]> => {
     myHeaders.append("Content-Type", "text/plain");
 
     const raw = `fields id, cover.image_id, cover.height, cover.width, first_release_date, name, rating, rating_count, url, game_modes.name;
-        where id = (${gameIds}); limit 50;`;
+        where id = (${gameIds}); limit ${limit};`;
 
     const requestOptions = {
         method: "POST",
@@ -208,11 +214,13 @@ export const _fetchPopularGamesData = async (): Promise<PopularGame[]> => {
                 )
         );
 
-        const gameMap = new Map(singePlayerGames.map(game => [game.id, game]));
+        const gameMap = new Map(
+            singePlayerGames.map((game) => [game.id, game])
+        );
         const gameIdsArr = gameIds.split(",");
-        const numGameIds = gameIdsArr.map(n => Number(n));
+        const numGameIds = gameIdsArr.map((n) => Number(n));
         const orderedGames = numGameIds
-            .map(id => gameMap.get(id))
+            .map((id) => gameMap.get(id))
             .filter(Boolean) as PopularGame[];
         return orderedGames.slice(0, 15);
     } catch (error) {
@@ -230,3 +238,78 @@ export const fetchPopularGamesData = unstable_cache(
     }
 );
 
+export const fetchUserData = async (userKindeId: string) => {
+    try {
+        const response = await fetch(`/api/user/?userKindeId=${userKindeId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }  
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        throw error;
+    }
+};
+
+export const _fetchMultipleGamesData = async (
+    limit: number,
+    savedGameIds?: string
+): Promise<PopularGame[]> => {
+    const clientId = process.env.TWITCH_ID;
+    const accessToken = await getAccessToken();
+    let gameIds;
+    if (savedGameIds) {
+        gameIds = savedGameIds;
+    } else {
+        gameIds = await fetchPopularGamesId();
+    }
+
+    if (!clientId || !accessToken) {
+        throw new Error(
+            "Missing required environment variables: clientId and/or accessToken"
+        );
+    }
+    const myHeaders = new Headers();
+    myHeaders.append("Client-ID", clientId);
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append("Content-Type", "text/plain");
+
+    const raw = `fields id, cover.image_id, cover.height, cover.width, first_release_date, name, rating, rating_count, url, game_modes.name;
+        where id = (${gameIds}); limit ${limit};`;
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+    };
+
+    try {
+        const response = await fetch(
+            "https://api.igdb.com/v4/games/",
+            requestOptions
+        );
+        if (!response.ok) {
+            throw new Error(`HTTP error! status ${response.status}`);
+        }
+        const result: PopularGame[] = await response.json();
+        return result;
+    } catch (error) {
+        console.error("Error while fetching data:", error);
+        throw error;
+    }
+};
+
+export const fetchMultipleGamesData = unstable_cache(
+    _fetchMultipleGamesData,
+    ["popular-games-data"],
+    {
+        revalidate: 3600,
+        tags: ["popularGamesData"],
+    }
+);

@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
     return (
         <AuthProvider>
-            <html lang="en">
+            <html lang="en" data-scroll-behavior="smooth">
                 <body className={`antialiased`}>
                     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-black">
                         <Header />

@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import PlatformGrid from "./PlatformGrid";
 import { BookText, Star } from "lucide-react";
+import SaveGameButton from "./SaveGameButton";
 
 interface GameHeaderData {
     backgroundId: string | null | undefined;
@@ -32,12 +33,14 @@ interface GameHeaderProps {
     title: string;
     subtitle?: string;
     gameHeaderData?: GameHeaderData | null;
+    gameId: string;
 }
 
 const GameHeader: React.FC<GameHeaderProps> = ({
     title,
     subtitle,
     gameHeaderData,
+    gameId,
 }) => {
     return (
         <div className="w-screen mt-4 bg-gradient-to-br from-gray-900 via-gray-900 to-black">
@@ -73,7 +76,8 @@ const GameHeader: React.FC<GameHeaderProps> = ({
                         />
                     </div>
                     <div className="flex-1 relative z-10 max-w-[320px] sm:max-w-[100vw] px-0">
-                        <div className="glass py-6 px-8 rounded-lg mb-4">
+                        <div className="relative glass py-6 px-8 rounded-lg mb-4">
+                            <div className="absolute top-5 right-5"><SaveGameButton gameId={gameId} /></div>
                             <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white pt-2">
                                 {title}
                             </h1>

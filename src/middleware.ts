@@ -7,12 +7,13 @@ export default withAuth(
     {
         isReturnToCurrentPage: true,
         loginPage: "/api/auth/login",
-        publicPaths: ["/"]
+        publicPaths: ["/", "/game/"]
     }
 );
 
 export const config = {
     matcher: [
         "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+        "/dashboard"
     ],
 };

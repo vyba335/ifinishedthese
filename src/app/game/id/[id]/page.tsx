@@ -61,6 +61,7 @@ function GameContent({ id }: { id: string }) {
                 title={game.name}
                 subtitle={game.summary}
                 gameHeaderData={gameHeaderData}
+                gameId={id}
             />
             {game.artworks && <ImageGrid artworks={game.artworks} />}
         </div>

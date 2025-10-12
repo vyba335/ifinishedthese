@@ -2,15 +2,15 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
     {
-        userKindeId: Number,
-        game: {
-            id: Number,
+        userKindeId: String,
+        game: [{
+            id: String,
             myRating: Number,
             myReview: String,
             finishDate: String,
             numberOfReplays: Number,
             additionalReplays: [String],
-        }
+        }]
     },
     {
         timestamps: true,
