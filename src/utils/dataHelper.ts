@@ -123,7 +123,7 @@ const _fetchPopularGamesId = async (): Promise<string> => {
     myHeaders.append("Content-Type", "text/plain");
 
     const raw = `fields game_id, value, popularity_type;
-        limit 50;
+        limit 100;
         sort value desc;
         where popularity_type=3;`;
 
@@ -222,7 +222,7 @@ export const _fetchPopularGamesData = async (
         const orderedGames = numGameIds
             .map((id) => gameMap.get(id))
             .filter(Boolean) as PopularGame[];
-        return orderedGames.slice(0, 15);
+        return orderedGames.slice(0, 30);
     } catch (error) {
         console.error("Error while fetching data:", error);
         throw error;

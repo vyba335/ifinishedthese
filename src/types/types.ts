@@ -21,7 +21,7 @@ export interface Game {
         height: number;
         artwork_type: {
             name: string;
-        }
+        };
     }>;
     screenshots?: Array<{
         id: number;
@@ -59,16 +59,16 @@ export interface Game {
         };
     }>;
     platforms?: Array<{
+        id: number;
+        name: string;
+        url: string;
+        platform_logo: Array<{
             id: number;
-            name: string;
-            url: string;
-            platform_logo: Array<{
-                id: number;
-                image_id: string;
-                width: number;
-                height: number;
-            }>
-    }>
+            image_id: string;
+            width: number;
+            height: number;
+        }>;
+    }>;
 }
 
 export interface PopularGame {
@@ -102,5 +102,32 @@ export interface ArtworkData {
     height: number;
     artwork_type: {
         name: string;
-    }
+    };
+}
+
+export interface UserGameEntry {
+    id: string;
+    myRating: number;
+    myReview: string;
+    finishDate: string;
+    numberOfReplays: number;
+    additionalReplays: string[];
+    _id: {
+        $oid: string;
+    };
+}
+
+export interface UserData {
+    _id: {
+        $oid: string;
+    };
+    userKindeId: string;
+    game: UserGameEntry[];
+    createdAt: {
+        $date: string;
+    };
+    updatedAt: {
+        $date: string;
+    };
+    __v: number;
 }

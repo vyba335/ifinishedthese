@@ -34,7 +34,7 @@ const HeroTitle: React.FC<HeroTitleProps> = async ({
                     {!isHome || isLoggedIn ? (
                         isDashboardEmpty ? null : (
                         <p className="text-xl text-[#0bedf5] mt-2">
-                            Save your first game by clicking the &quot;Save
+                            Save games by clicking the &quot;Save
                             Game&quot; button on the game page.
                         </p>
                         )

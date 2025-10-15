@@ -1,6 +1,6 @@
 import GameCardGrid from "@/components/ui/GameCardGrid";
 import HeroTitle from "@/components/ui/HeroTitle";
-import { PopularGame } from "@/types/types";
+import { PopularGame, UserData } from "@/types/types";
 import { fetchMultipleGamesData } from "@/utils/dataHelper";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import User from "@/lib/models/userModel";
@@ -12,7 +12,8 @@ const DashboardPage = async () => {
     const userKindeId = user?.id as string;
 
     await connectToMongoDB();
-    const userData = await User.findOne({ userKindeId });
+    const userDataDoc = await User.findOne({ userKindeId });
+    const userData: UserData | null = userDataDoc ? JSON.parse(JSON.stringify(userDataDoc)) : null;
     const userGames = userData?.game || [];
     const gameIds = Array.isArray(userGames)
         ? userGames.map((game: { id: string }) => game.id).join(",")
@@ -32,8 +33,8 @@ const DashboardPage = async () => {
 
     return (
         <>
-            <HeroTitle title="My Finished Games" subtitle="My finished games with rating and a review." isDashboardEmpty={gameIds !== ""} />
-            <GameCardGrid gameDataAsProp={gamesData} isDashboard={true} />
+            <HeroTitle title="My Finished Games" subtitle="My finished games with rating and a review." isDashboardEmpty={gameIds.length !== 0} />
+            <GameCardGrid userGameData={gamesData} userData={userData} isDashboard={true} />
         </>
     );
 };
