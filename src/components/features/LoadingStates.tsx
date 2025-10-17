@@ -150,3 +150,19 @@ export const GameCardGridSkeleton: React.FC = () => {
         </section>
     );
 };
+
+export const SearchSkeleton: React.FC = () => (
+  <div className="space-y-3">
+    {[1, 2, 3, 4, 5].map((i) => (
+      <div key={i} className="flex items-center space-x-3 p-3 border-b border-[#54ff4860] last:border-b-0">
+        <Skeleton className="w-12 h-18" />
+        <div className="flex-1 space-y-2">
+          <div className="flex items-center gap-2">
+            <Skeleton className="w-full h-4" />
+          </div>
+          <Skeleton className="h-3 w-1/2" />
+        </div>
+      </div>
+    ))}
+  </div>
+);

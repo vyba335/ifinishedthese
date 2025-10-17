@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
 import type { PopularGame, UserGameEntry } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Calendar } from "lucide-react";
 import GameRating from "./GameRating";
 import GameReview from "./GameReview";
+import RemoveGameButton from "./RemoveGameButton";
 
 interface GameCardProps {
     gameData: PopularGame;
@@ -25,10 +25,6 @@ export const GameCard: React.FC<GameCardProps> = ({
     const handleGameCardClick = () => {
         router.push(`/game/id/${gameData.id}`);
     };
-    useEffect(() => {
-        console.log("Game Data:", gameData);
-        console.log("User Game Data:", userGameData);
-    }, [gameData, userGameData]);
 
     return (
         <div className="group">
@@ -50,14 +46,13 @@ export const GameCard: React.FC<GameCardProps> = ({
                     {isDashboard && (
                         <button
                             onClick={handleGameCardClick}
-                            className="btn-secondary absolute bottom-5 left-5 z-10 hidden md:visible group-hover:block transition-all"
+                            className="btn-secondary absolute bottom-5 left-5 z-10 visible md:hidden group-hover:block transition-all"
                             data-theme="dark"
                         >
                             Go to detail
                         </button>
                     )}
                 </div>
-
                 <div className="p-6">
                     <div className="mb-3">
                         <h3 className="text-xl text-wrap font-bold text-white group-hover:gradient-text transition-all duration-300 line-clamp-1">
@@ -91,6 +86,9 @@ export const GameCard: React.FC<GameCardProps> = ({
                                     isEditing={isEditing}
                                 />
                             )}
+                            {isDashboard && isEditing && (
+                                <div className="absolute bottom-2 right-4"><RemoveGameButton gameId={String(gameData.id)} /></div>
+                            )}                            
                         </div>
                     </div>
                 </div>

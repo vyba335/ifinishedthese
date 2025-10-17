@@ -75,9 +75,10 @@ const GameHeader: React.FC<GameHeaderProps> = ({
                             }
                         />
                     </div>
+                    <div className="block md:hidden z-10"><SaveGameButton gameId={gameId} /></div>
                     <div className="flex-1 relative z-10 max-w-[320px] sm:max-w-[100vw] px-0">
                         <div className="relative glass py-6 px-8 rounded-lg mb-4">
-                            <div className="absolute top-5 right-5"><SaveGameButton gameId={gameId} /></div>
+                            <div className="hidden md:block absolute top-5 right-5"><SaveGameButton gameId={gameId} /></div>
                             <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white pt-2">
                                 {title}
                             </h1>
@@ -105,7 +106,6 @@ const GameHeader: React.FC<GameHeaderProps> = ({
                             {gameHeaderData?.rating && (
                                 <div className="glass flex flex-col rounded-lg justify-center items-center text-center px-4 py-2">
                                     <div className="flex justify-center items-center gap-2 text-2xl leading-none">
-                                        <Star className="w-8 h-8 text-yellow-300" />
                                         <span>{Number(gameHeaderData?.rating?.toFixed(0)) / 10}/10</span>
                                     </div>
                                     <div className="col-span-2 h-auto">{gameHeaderData.ratingCount > 1000 ? `${(gameHeaderData.ratingCount / 1000).toFixed(0)}k+` : gameHeaderData.ratingCount} user ratings</div>

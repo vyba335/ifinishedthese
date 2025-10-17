@@ -131,3 +131,17 @@ export interface UserData {
     };
     __v: number;
 }
+
+export interface SearchResult {
+    id: number;
+    game: {
+        id: number;
+        cover: {
+            height: number;
+            image_id: string;
+            width: number;
+        };
+    };
+    name: string;
+    published_at: number;
+}

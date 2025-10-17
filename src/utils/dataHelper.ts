@@ -1,4 +1,5 @@
-import type { Game, GameModes, PopularGame } from "@/types/types";
+"use server";
+import type { Game, GameModes, PopularGame, SearchResult } from "@/types/types";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
@@ -248,7 +249,7 @@ export const fetchUserData = async (userKindeId: string) => {
         });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
-        }  
+        }
         const data = await response.json();
         return data;
     } catch (error) {
@@ -313,3 +314,44 @@ export const fetchMultipleGamesData = unstable_cache(
         tags: ["popularGamesData"],
     }
 );
+
+export const fetchGamesBySearch = async (query: string): Promise<SearchResult[]> => {
+    const clientId = process.env.TWITCH_ID;
+    const accessToken = await getAccessToken();
+
+    if (!clientId || !accessToken) {
+        throw new Error(
+            "Missing required environment variables: clientId and/or accessToken"
+        );
+    }
+
+    const myHeaders = new Headers();
+    myHeaders.append("Client-ID", clientId);
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append("Content-Type", "text/plain");
+
+    const raw = `fields name, game, game.cover.image_id, game.cover.height, game.cover.width, published_at;
+        search "${query}"; limit 25;`;
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+    };
+
+    try {
+        const response = await fetch(
+            "https://api.igdb.com/v4/search/",
+            requestOptions
+        );
+        if (!response.ok) {
+            throw new Error(`HTTP error! status ${response.status}`);
+        }
+        const result: SearchResult[] = await response.json();
+        return result;
+    } catch (error) {
+        console.error("Error while fetching data:", error);
+        throw error;
+    }
+};
+

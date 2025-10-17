@@ -13,10 +13,10 @@ const RandomButton = () => {
         <button
         title="Go to a random game"
         type="button"
-        className="flex justify-evenly items-center gap-2 btn-primary"
+        className="md:btn-primary group/random px-1 hover:px-0.5"
         onClick={handleRandomClick}
         >
-            <Shuffle className="w-5 h-5" />
+            <Shuffle className="w-5 h-5 group-hover/random:text-[#54ff48] group-hover/random:h-6 group-hover/random:w-6 group-hover/random:cursor-pointer" />
         </button>
     )
 }

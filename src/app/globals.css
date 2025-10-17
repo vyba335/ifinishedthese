@@ -16,15 +16,15 @@
     --accent-700: #d946ef;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-primary: linear-gradient(135deg, #3ab232 0%, #21651c 100%);
     --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 
     /* Glass Morphism */
     --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(84, 255, 72, 0.2);
     --glass-bg-dark: rgba(0, 0, 0, 0.3);
-    --glass-border-dark: rgba(255, 255, 255, 0.1);
+    --glass-border-dark: rgba(84, 255, 72, 0.1);
 
     /* Surfaces */
     --surface-primary: #ffffff;
@@ -303,13 +303,6 @@ a:not(.btn-primary):not(.btn-secondary):not(.btn-ghost):hover {
     );
     background-size: 200px 100%;
     animation: shimmer 1.5s infinite;
-}
-
-/* Focus Styles */
-*:focus-visible {
-    outline: 2px solid var(--primary-500);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
 }
 
 /* Scrollbar Styles */

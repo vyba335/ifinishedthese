@@ -111,7 +111,7 @@ export async function removeGame(gameId: string) {
 
         const initialGameCount = userData.game.length;
         userData.game = userData.game.filter(
-            (game: { id: number }) => game.id !== parseInt(gameId)
+            (game: { id: string }) => game.id !== gameId
         );
 
         if (userData.game.length === initialGameCount) {
@@ -195,3 +195,4 @@ export async function updateGameReview(gameId: string, review: string) {
         return { success: false, message: "Failed to update game review." };
     }
 }
+

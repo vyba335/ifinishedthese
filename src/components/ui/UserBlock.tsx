@@ -7,4 +7,3 @@ export const UserBlock = async () => {
 
     return <UserBlockClient isLoggedIn={isLoggedIn} />;
 };
-        

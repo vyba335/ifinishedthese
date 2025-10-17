@@ -1,9 +1,28 @@
 "use client";
 import { PopularGame } from "@/types/types";
 import { CirclePlus, Pencil, Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateGameRating } from "@/utils/saveGame";
 import { useRouter } from "next/navigation";
+
+const RATING_COLOR = {
+    colors: {
+        0: "text-[#FF0000]",
+        1: "text-[#FF3300]",
+        2: "text-[#FF6600]",
+        3: "text-[#FF9900]",
+        4: "text-[#FFCC00]",
+        5: "text-[#FFFF00]",
+        6: "text-[#CCFF00]",
+        7: "text-[#99FF00]",
+        8: "text-[#66FF00]",
+        9: "text-[#33FF00]",
+        10: "text-[#00FF00]",
+    },
+    getColor: function (rating: number) {
+        return this.colors[rating as keyof typeof this.colors];
+    },
+};
 
 interface GameRatingProps {
     gameData: PopularGame;
@@ -25,7 +44,6 @@ const GameRating: React.FC<GameRatingProps> = ({
     );
     const [hoverRating, setHoverRating] = useState<number>(0);
 
-    // Sync selectedRating with userRating prop when it changes
     useEffect(() => {
         if (userRating !== undefined) {
             setSelectedRating(userRating);
@@ -53,14 +71,8 @@ const GameRating: React.FC<GameRatingProps> = ({
             {gameData.rating && gameData.rating_count && !isDashboard && (
                 <div className="glass flex flex-col rounded-lg px-4 py-2">
                     <div className="flex justify-center items-center gap-2">
-                        <div>
-                            <Star
-                                className="w-8 h-8 text-yellow-300"
-                                fill="yellow"
-                            />
-                        </div>
-                        <div className="flex flex-col items-end">
-                            <span className="text-2xl leading-none">
+                        <div className="flex flex-col items-center">
+                            <span className={`text-2xl leading-none ${RATING_COLOR.getColor(Number((gameData.rating / 10).toPrecision(1)))}`}>
                                 {Number(gameData.rating.toFixed(0)) / 10}
                                 /10
                             </span>
@@ -70,7 +82,7 @@ const GameRating: React.FC<GameRatingProps> = ({
                                           0
                                       )}k+`
                                     : gameData.rating_count}{" "}
-                                total
+                                total ratings
                             </span>
                         </div>
                     </div>
@@ -83,15 +95,11 @@ const GameRating: React.FC<GameRatingProps> = ({
                 selectedRating !== -1 && (
                     <div className="flex flex-col items-center">
                         <div className="glass flex flex-col rounded-lg px-4 py-2">
-                            <div className="flex justify-end items-center gap-2 pb-2">
-                                <div>
-                                    <Star
-                                        className="w-8 h-8 text-yellow-300"
-                                        fill="yellow"
-                                    />
-                                </div>
-                                <div className="flex flex-col items-end">
-                                    <span className="text-2xl leading-none">
+                            <div className="flex justify-center items-center gap-2 pb-2">
+                                <div className="flex flex-col items-center">
+                                    <span
+                                        className={`text-2xl leading-none ${RATING_COLOR.getColor(selectedRating)}`}
+                                    >
                                         {selectedRating}
                                         /10
                                     </span>
@@ -131,32 +139,24 @@ const GameRating: React.FC<GameRatingProps> = ({
                 gameData.rating_count &&
                 selectedRating === -1 && (
                     <div className="glass flex flex-col rounded-lg px-4 py-2">
-                        <div className="flex justify-end items-center gap-2 pb-2">
-                            <div>
-                                <Star
-                                    className="w-8 h-8 text-yellow-300"
-                                    fill="yellow"
-                                />
-                            </div>
-                            <div className="flex flex-col items-end">
-                                <span className="text-2xl leading-none">
-                                    {Number(gameData.rating.toFixed(0)) / 10}
-                                    /10
-                                </span>
-                                <span className="h-auto">
-                                    {gameData.rating_count > 1000
-                                        ? `${(
-                                              gameData.rating_count / 1000
-                                          ).toFixed(0)}k+`
-                                        : gameData.rating_count}{" "}
-                                    total
+                        <div className="flex justify-center items-center gap-2 pb-2">
+                            <div className="flex flex-col items-center">
+                                <span className="text-red-400">
+                                    Not rated yet
                                 </span>
                             </div>
                         </div>
                         <hr className="text-gray-600" />
                         <div className="flex flex-col items-center justify-center gap-1">
                             <div className="text-gray-400">
-                                No personal rating
+                                {Number(gameData.rating.toFixed(0)) / 10}
+                                /10 -{" "}
+                                {gameData.rating_count > 1000
+                                    ? `${(gameData.rating_count / 1000).toFixed(
+                                          0
+                                      )}k+`
+                                    : gameData.rating_count}{" "}
+                                total
                             </div>
                             <button
                                 onClick={openModal}
@@ -208,14 +208,15 @@ const RatingModal: React.FC<RatingModalProps> = ({
     handleMouseLeave,
     router,
 }) => {
+    const ratingRef = useRef(selectedRating);
     return (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex justify-center items-center z-50">
             <div className="flex flex-col justify-center items-center rounded-lg p-6 w-60 max-w-md glass-dark gap-2">
                 <h2 className="text-xl font-bold text-center">
                     Rate {gameData.name}
                 </h2>
-                <div className="text-4xl text-yellow-300">
-                    {selectedRating}/10
+                <div className={`text-4xl ${RATING_COLOR.getColor(selectedRating)}`}>
+                    {selectedRating === -1 ? "0" : selectedRating}/10
                 </div>
                 <div className="flex justify-center">
                     {[...Array(10)].map((_, index) => {
@@ -226,7 +227,7 @@ const RatingModal: React.FC<RatingModalProps> = ({
                                 className={`w-5 h-5 cursor-pointer ${
                                     (hoverRating || selectedRating) >=
                                     ratingValue
-                                        ? "text-yellow-400"
+                                        ? RATING_COLOR.getColor(ratingValue)
                                         : "text-gray-300"
                                 }`}
                                 onClick={() => handleRatingSelect(ratingValue)}
@@ -248,7 +249,10 @@ const RatingModal: React.FC<RatingModalProps> = ({
                 </div>
                 <div className="flex justify-end space-x-4">
                     <button
-                        onClick={closeModal}
+                        onClick={() => {
+                            handleRatingSelect(ratingRef.current);
+                            closeModal();
+                        }}
                         className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
                         aria-label="Cancel Rating"
                     >

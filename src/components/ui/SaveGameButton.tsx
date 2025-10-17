@@ -46,7 +46,7 @@ const SaveGameButton = ({ gameId }: { gameId: string }) => {
         <button
             type="button"
             onClick={handleClick}
-            className="btn-primary cursor-default"
+            className="btn-primary cursor-default max-w-[320px] w-[100vw] md:w-auto"
             disabled={isPending || isSaved}
         >
             {isPending ? (

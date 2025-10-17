@@ -9,7 +9,11 @@ interface GameReviewProps {
     isEditing: boolean;
 }
 
-const GameReview: React.FC<GameReviewProps> = ({ review, gameId, isEditing }) => {
+const GameReview: React.FC<GameReviewProps> = ({
+    review,
+    gameId,
+    isEditing,
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
 
@@ -29,7 +33,9 @@ const GameReview: React.FC<GameReviewProps> = ({ review, gameId, isEditing }) =>
                     <p className="text-gray-300">{review}</p>
                     <button
                         onClick={openModal}
-                        className={`${isEditing ? "flex" : "hidden"} border border-green-600 mt-2 justify-center items-center gap-2 cursor-pointer py-1.5 px-2 rounded-lg`}
+                        className={`${
+                            isEditing ? "flex" : "hidden"
+                        } border border-green-600 mt-2 justify-center items-center gap-2 cursor-pointer py-1.5 px-2 rounded-lg`}
                         aria-label="Edit Review"
                         data-theme="dark"
                     >
@@ -58,7 +64,7 @@ const GameReview: React.FC<GameReviewProps> = ({ review, gameId, isEditing }) =>
                     isOpen={isModalOpen}
                     onClose={closeModal}
                     currentReview={review || ""}
-                    gameId={gameId} // Pass the actual game ID here
+                    gameId={gameId}
                     onSave={closeModal}
                     router={router}
                 />
@@ -109,10 +115,11 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                     Edit Review
                 </h2>
                 <textarea
-                    className="w-full h-32 p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
                     placeholder="Write your review here..."
+                    rows={10}
                 />
                 <div className="flex justify-end mt-4 gap-2">
                     <button

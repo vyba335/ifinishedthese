@@ -35,7 +35,6 @@ const GridContent = ({
         }
     } else {
         gamesData = popularGameData ?? [];
-        console.log(popularGameData);
 
         if (!gamesData || gamesData.length === 0) {
             return (

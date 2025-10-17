@@ -31,14 +31,3 @@ const PlatformGrid = ({ platforms, gameUrl }: { platforms: Platform[], gameUrl: 
 };
 
 export default PlatformGrid;
-
-{
-    /* <Image
-            alt={platform.name}
-            key={platform.id}
-            src={`https://images.igdb.com/igdb/image/upload/t_logo_med/${platform.platform_logo.image_id}.png`}
-            width={platform.platform_logo.width}
-            height={platform.platform_logo.height}
-            className="h-[30px] w-auto px-4"
-        /> */
-}

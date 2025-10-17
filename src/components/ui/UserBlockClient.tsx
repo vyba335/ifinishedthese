@@ -10,7 +10,7 @@ const UserBlockClient = ({ isLoggedIn }: { isLoggedIn: null | boolean }) => {
     return isLoggedIn ? (
         <div className="glass-dark rounded flex justify-center items-center">
             <Link href="/dashboard">
-                <div className="rounded text-gray-300 hover:text-white bg-gradient-to-br from-[#141052] to-[#2f053b] hover:from-[#1e1877] hover:to-[#530968] px-4 py-2 cursor-pointer transition-colors">
+                <div className="rounded text-gray-200 hover:text-white bg-gradient-to-br from-[#3ab232] to-[#21651c] hover:from-[#3ab232] hover:to-[#3ab232] px-4 py-2 cursor-pointer transition-colors">
                     Dashboard
                 </div>
             </Link>
