@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     title: "I Finished These!",
     description:
         "Save your finished games, write review for them and share your list!",
+    viewport: "width=device-width, initial-scale=1"
 };
 
 export default function RootLayout({

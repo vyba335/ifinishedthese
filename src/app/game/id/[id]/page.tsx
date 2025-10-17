@@ -63,7 +63,14 @@ function GameContent({ id }: { id: string }) {
                 gameHeaderData={gameHeaderData}
                 gameId={id}
             />
-            {game.artworks && <ImageGrid artworks={game.artworks} />}
+            {game.artworks && (
+                <section className="flex flex-col justify-center items-center py-4 max-w-[1400px]">
+                    <div className="glass w-full text-center py-6 rounded">
+                        <h2 className="text-2xl">Artworks</h2>
+                    </div>
+                    <ImageGrid images={game.artworks} name="Artwork" />
+                </section>
+            )}
         </div>
     );
 }

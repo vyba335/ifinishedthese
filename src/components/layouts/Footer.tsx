@@ -20,7 +20,7 @@ const Footer = () => {
                 <AccessibilityFeatures />
             </div>
             <p className="block mb-4 text-sm text-center text-slate-300 md:mb-0 border-t border-[#54ff48] copyright-block mt-4 pt-4">
-                IFinishedThese © 2025
+                IFinishedThese © vyb4_ | 2025
             </p>
         </footer>
     );

@@ -243,7 +243,7 @@ a:not(.btn-primary):not(.btn-secondary):not(.btn-ghost):hover {
 .card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-2xl);
-    border-color: rgba(102, 126, 234, 0.3);
+    border-color: rgba(84, 255, 72, 0.3);
 }
 
 .card-interactive {

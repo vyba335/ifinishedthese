@@ -18,7 +18,7 @@ const Header = () => {
                                 alt="IFinishedThese"
                                 width={50}
                                 height={50}
-                                className="logo hover:scale-115 transition-all"
+                                className="logo hover:scale-115 transition-all hover:drop-shadow-sm hover:drop-shadow-green-400"
                             />
                         </Link>
                     </div>

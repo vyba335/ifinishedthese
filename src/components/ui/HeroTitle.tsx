@@ -40,19 +40,19 @@ const HeroTitle: React.FC<HeroTitleProps> = async ({
                         )
                     ) : (
                         <div className="flex flex-col gap-4 justify-center items-center">
-                            <p className="text-xl text-[#0bedf5] mt-2">
+                            <p className="text-xl text-[#54ff48] mt-2">
                                 Start by creating an account, it&apos;s{" "}
                                 <span className="underline">free</span> and only
                                 takes a minute!
                             </p>
-                            <div className="flex flex-row">
+                            <div className="glass-dark rounded flex flex-row">
                                 <RegisterLink>
-                                    <div className="rounded text-gray-300 hover:text-white bg-gradient-to-br from-[#141052] to-[#2f053b] hover:from-[#1e1877] hover:to-[#530968] px-4 py-2 cursor-pointer transition-colors">
+                                    <div className="rounded text-gray-200 hover:text-white bg-gradient-to-br from-[#3ab232] to-[#21651c] hover:from-[#3ab232] hover:to-[#3ab232] px-4 py-2 cursor-pointer transition-colors">
                                         Register
                                     </div>
                                 </RegisterLink>
                                 <LoginLink>
-                                    <div className="rounded-lg text-gray-500 hover:text-yellow-400 px-4 py-2 cursor-pointer transition-colors">
+                                    <div className="rounded-lg text-gray-300 hover:text-[#54ff48] px-4 py-2 cursor-pointer transition-colors">
                                         Login
                                     </div>
                                 </LoginLink>
