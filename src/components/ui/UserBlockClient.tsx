@@ -29,7 +29,7 @@ const UserBlockClient = ({ isLoggedIn }: { isLoggedIn: null | boolean }) => {
             </LoginLink>
             <RegisterLink>
                 <div className="rounded-lg text-gray-300 hover:text-[#54ff48] px-4 py-2 cursor-pointer transition-colors">
-                    Sign up
+                    Register
                 </div>
             </RegisterLink>
         </div>

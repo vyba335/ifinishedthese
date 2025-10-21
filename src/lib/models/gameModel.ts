@@ -1,12 +1,10 @@
 import mongoose, { Document, Model } from "mongoose";
 
 export interface GameInterface {
-    // Required fields - present in both examples
     gameId: number;
     name: string;
     slug: string;
 
-    // Fields present in both but could be empty arrays/undefined
     url?: string;
     created_at?: number;
     updated_at?: number;
@@ -33,7 +31,6 @@ export interface GameInterface {
     language_supports?: number[];
     collections?: number[];
 
-    // Optional fields - not present in all games
     age_ratings?: number[];
     aggregated_rating?: number;
     aggregated_rating_count?: number;

@@ -8,10 +8,10 @@ import RandomButton from "../ui/RandomButton";
 
 const Header = () => {
     return (
-        <header className="custom-header">
-            <div className="mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-6">
-                <div className="flex h-16 items-center justify-center gap-4">
-                    <div className="flex">
+        <header>
+            <div className="flex flex-col items-center py-2 md:py-6">
+                <div className="flex items-center justify-evenly md:justify-center h-16 w-full gap-4">
+                    <div>
                         <Link href="/">
                             <Image
                                 src={IFTLogo}
@@ -22,10 +22,11 @@ const Header = () => {
                             />
                         </Link>
                     </div>
-                    <SearchInput />
+                    <div className="hidden md:block"><SearchInput /></div>
                     <RandomButton />
                     <UserBlock />
                 </div>
+                <div className="md:hidden w-full"><SearchInput /></div>
             </div>
         </header>
     );
